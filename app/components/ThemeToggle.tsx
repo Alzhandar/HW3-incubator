@@ -1,18 +1,13 @@
 'use client';
 
-import { useContext } from 'react';
-import { ThemeContext } from '../context/ThemeContext';
+import { useTheme } from '../context/ThemeContext';
 
 const ThemeToggle = () => {
-    const themeContext = useContext(ThemeContext);
-
-    if (!themeContext) {
-        return null;
-    }
+    const { theme, toggleTheme } = useTheme();
 
     return (
-        <button onClick={themeContext.toggleTheme}>
-            Switch to {themeContext.theme === 'light' ? 'Dark' : 'Light'} Theme
+        <button onClick={toggleTheme} style={{ padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }}>
+            Switch to {theme === 'light' ? 'Dark' : 'Light'} Theme
         </button>
     );
 };

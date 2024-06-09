@@ -1,16 +1,16 @@
 'use client';
 
-import { createContext, useState, ReactNode } from 'react';
+import { createContext, useState, ReactNode, useContext } from 'react';
 
 interface ThemeContextProps {
-    theme: string;
+    theme: 'light' | 'dark';
     toggleTheme: () => void;
 }
 
-export const ThemeContext = createContext<ThemeContextProps | null>(null);
+const ThemeContext = createContext<ThemeContextProps | null>(null);
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-    const [theme, setTheme] = useState<string>('light');
+    const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
     const toggleTheme = () => {
         setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
@@ -21,4 +21,12 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
             <div className={theme}>{children}</div>
         </ThemeContext.Provider>
     );
+};
+
+export const useTheme = () => {
+    const context = useContext(ThemeContext);
+    if (!context) {
+        throw new Error('useTheme must be used within a ThemeProvider');
+    }
+    return context;
 };

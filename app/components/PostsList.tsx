@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import axiosInstance from '../axiosInstance';
 import { Post } from '../types';
@@ -8,12 +8,12 @@ import AddPost from './AddPost';
 import UpdatePost from './UpdatePost';
 import DeletePost from './DeletePost';
 import styles from './PostsList.module.css';
-import { ThemeContext } from '../context/ThemeContext';
+import { useTheme } from '../context/ThemeContext';
 
 const PostsList = () => {
     const [posts, setPosts] = useState<Post[]>([]);
     const [editingPostId, setEditingPostId] = useState<number | null>(null);
-    const { theme } = useContext(ThemeContext);
+    const { theme } = useTheme();
 
     const fetchPosts = async () => {
         try {
@@ -63,12 +63,12 @@ const PostsList = () => {
                         <h2 className="postTitle">{post.title}</h2>
                         <p>{post.body.substring(0, 100)}</p>
                     </div>
-                    <div className={styles.postAuthor}>
-                        {/* <img src="https://via.placeholder.com/50" alt="Author" />
+                    {/* <div className={styles.postAuthor}>
+                        <img src="https://via.placeholder.com/50" alt="Author" />
                         <div>
                             <span className={styles.postAuthorName}>{post.user?.name || 'Author Name'}</span>
-                        </div> */}
-                    </div>
+                        </div>
+                    </div> */}
                     <div className={styles.postBody}>
                         {post.body}
                     </div>
